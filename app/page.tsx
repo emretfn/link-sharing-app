@@ -1,9 +1,10 @@
-import Button from "@/components/ui/button";
+import Input from "@/components/ui/input";
+import IconLink from "public/assets/images/icon-link.svg";
 
 export default function Home() {
   return (
     <main>
-      <Button>Save</Button>
+      <Input icon={<IconLink />}></Input>
     </main>
   );
 }
