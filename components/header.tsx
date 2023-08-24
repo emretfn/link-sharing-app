@@ -18,7 +18,7 @@ const Header = () => {
       </div>
 
       {/* Links */}
-      <div className="flex items-center desktop :gap-x-4">
+      <div className="flex items-center desktop:gap-x-4">
         <MenuLink icon={<IconLink />} href="/dashboard/links">
           Links
         </MenuLink>
