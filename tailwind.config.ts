@@ -27,6 +27,9 @@ const config: Config = {
         sm: "0.75rem",
         "4xl": "2rem",
       },
+      boxShadow: {
+        active: "0px 0px 32px 0px rgba(99, 60, 255, 0.25)",
+      },
     },
   },
   plugins: [],
