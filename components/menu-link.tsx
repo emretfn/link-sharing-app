@@ -24,7 +24,7 @@ const MenuLink = ({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-x-2 px-7 py-3 rounded-lg heading-s hover:text-primary transition-colors text-grey",
+        "inline-flex items-center gap-x-2 px-7 py-3 rounded-lg heading-s hover:text-primary transition-colors text-grey hover-fill-primary",
         {
           "text-primary bg-primary-light": isActive,
         },

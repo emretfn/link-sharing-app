@@ -22,3 +22,9 @@
     @apply text-sm leading-[150%];
   }
 }
+
+@layer utilities {
+  .hover-fill-primary:hover svg path {
+    @apply fill-primary;
+  }
+}
