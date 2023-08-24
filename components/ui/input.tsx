@@ -35,7 +35,6 @@ const Input = ({
             className
           )}
           {...props}
-          placeholder="Text Field Empty"
         />
         {error && (
           <span className="body-s text-red absolute top-1/2 right-4 -translate-y-1/2">
