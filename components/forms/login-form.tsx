@@ -22,7 +22,7 @@ const LoginForm = () => {
       />
       <Button block>Login</Button>
       <div className="text-center text-grey">
-        <span>Don't have an account?</span>{" "}
+        <span>Don&apos;t have an account? </span>{" "}
         <Link className="text-primary" href="/register">
           Create account
         </Link>
