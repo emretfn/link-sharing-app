@@ -33,6 +33,7 @@ const config: Config = {
       },
       boxShadow: {
         active: "0px 0px 32px 0px rgba(99, 60, 255, 0.25)",
+        box: "0px 0px 32px 0px rgba(0, 0, 0, 0.1)",
       },
       backgroundImage: {
         "phone-mockup": "url('/assets/images/illustration-phone-mockup.svg')",

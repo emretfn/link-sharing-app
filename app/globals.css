@@ -27,4 +27,7 @@
   .hover-fill-primary:hover svg path {
     @apply fill-primary;
   }
+  .checked-fill-primary[data-state="checked"] path {
+    @apply fill-primary;
+  }
 }
