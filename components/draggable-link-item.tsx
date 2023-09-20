@@ -10,43 +10,69 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SocialLinks } from "@/lib/constants";
+import { Draggable } from "react-beautiful-dnd";
 
-const DraggableLinkItem = () => {
+interface DraggableLinkItemProps {
+  draggableId: string;
+  index: number;
+  link: {
+    platform: string;
+    url: string;
+    order: number;
+  };
+}
+
+const DraggableLinkItem = ({
+  draggableId,
+  index,
+  link,
+}: DraggableLinkItemProps) => {
   return (
-    <div className="w-full bg-grey-light p-5 flex flex-col gap-y-3 rounded-xl">
-      {/* Item Header */}
-      <div className="flex justify-between items-center">
-        <div className="flex items-center font-bold text-grey gap-x-2">
-          <IconDrag />
-          <div>Link #1</div>
+    <Draggable draggableId={draggableId} index={index}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          className="w-full bg-grey-light p-5 flex flex-col gap-y-3 rounded-xl mb-6"
+        >
+          {/* Item Header */}
+          <div className="flex justify-between items-center">
+            <div
+              {...provided.dragHandleProps}
+              className="flex items-center font-bold text-grey gap-x-2"
+            >
+              <IconDrag />
+              <div>Link #{link.order}</div>
+            </div>
+            <button className="body-m text-grey">Remove</button>
+          </div>
+          {/* Form Fields */}
+          <label className="flex flex-col">
+            <span className="body-s">Platform</span>
+            <Select defaultValue={SocialLinks[0].value} value={link.platform}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {SocialLinks.map((link) => (
+                  <SelectItem value={link.value} key={link.value}>
+                    <link.icon />
+                    <span>{link.name}</span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </label>
+          <div>
+            <Input
+              icon={<IconLink />}
+              placeholder="e.g. https://www.github.com/johnappleseed"
+              label="Link"
+            />
+          </div>
         </div>
-        <button className="body-m text-grey">Remove</button>
-      </div>
-      {/* Form Fields */}
-      <label className="flex flex-col">
-        <span className="body-s">Platform</span>
-        <Select defaultValue={SocialLinks[0].value}>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {SocialLinks.map((link) => (
-              <SelectItem value={link.value} key={link.value}>
-                <link.icon />
-                <span>{link.name}</span>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </label>
-      <div>
-        <Input
-          icon={<IconLink />}
-          placeholder="e.g. https://www.github.com/johnappleseed"
-          label="Link"
-        />
-      </div>
-    </div>
+      )}
+    </Draggable>
   );
 };
 
