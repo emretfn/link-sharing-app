@@ -1,6 +1,13 @@
+//Providers
+import ReduxProvider from "@/store/provider";
+
+//assets
 import "./globals.css";
+
+//Types
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
+//Fonts
 import localFont from "next/font/local";
 
 const instrumentSans = localFont({
@@ -19,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={instrumentSans.className}>{children}</body>
+      <ReduxProvider>
+        <body className={instrumentSans.className}>{children}</body>
+      </ReduxProvider>
     </html>
   );
 }

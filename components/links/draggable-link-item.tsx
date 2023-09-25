@@ -1,7 +1,10 @@
-import React from "react";
+//Icons
 import IconDrag from "@/public/assets/images/icon-drag-and-drop.svg";
 import IconLink from "@/public/assets/images/icon-link.svg";
-import Input from "./ui/input";
+
+//Components
+import Input from "@/components/ui/input";
+import { Draggable } from "react-beautiful-dnd";
 import {
   SelectContent,
   SelectItem,
@@ -9,13 +12,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+//Redux
+import { removeLink } from "@/store/social-links-store";
+import { useAppDispatch } from "@/store";
+
+//Constants
 import { SocialLinks } from "@/lib/constants";
-import { Draggable } from "react-beautiful-dnd";
 
 interface DraggableLinkItemProps {
   draggableId: string;
   index: number;
   link: {
+    id: string;
     platform: string;
     url: string;
     order: number;
@@ -27,6 +36,10 @@ const DraggableLinkItem = ({
   index,
   link,
 }: DraggableLinkItemProps) => {
+  const dispatch = useAppDispatch();
+  const handleRemove = (id: string) => {
+    dispatch(removeLink(id));
+  };
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(provided, snapshot) => (
@@ -44,7 +57,12 @@ const DraggableLinkItem = ({
               <IconDrag />
               <div>Link #{link.order}</div>
             </div>
-            <button className="body-m text-grey">Remove</button>
+            <button
+              onClick={() => handleRemove(link.id)}
+              className="body-m text-grey"
+            >
+              Remove
+            </button>
           </div>
           {/* Form Fields */}
           <label className="flex flex-col">
