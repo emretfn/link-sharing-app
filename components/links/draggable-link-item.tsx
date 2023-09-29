@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 
 //Redux
-import { removeLink } from "@/store/social-links-store";
+import { removeLink, updateLink } from "@/store/social-links-store";
 import { useAppDispatch } from "@/store";
 
 //Constants
@@ -40,6 +40,26 @@ const DraggableLinkItem = ({
   const handleRemove = (id: string) => {
     dispatch(removeLink(id));
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //store updateLink action
+    dispatch(
+      updateLink({
+        id: link.id,
+        url: e.target.value,
+      })
+    );
+  };
+
+  const handlePlatformChange = (value: string) => {
+    dispatch(
+      updateLink({
+        id: link.id,
+        platform: value,
+      })
+    );
+  };
+
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(provided, snapshot) => (
@@ -67,7 +87,11 @@ const DraggableLinkItem = ({
           {/* Form Fields */}
           <label className="flex flex-col">
             <span className="body-s">Platform</span>
-            <Select defaultValue={SocialLinks[0].value} value={link.platform}>
+            <Select
+              defaultValue={SocialLinks[0].value}
+              value={link.platform}
+              onValueChange={handlePlatformChange}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -86,6 +110,9 @@ const DraggableLinkItem = ({
               icon={<IconLink />}
               placeholder="e.g. https://www.github.com/johnappleseed"
               label="Link"
+              value={link?.url}
+              onChange={handleInputChange}
+              required
             />
           </div>
         </div>

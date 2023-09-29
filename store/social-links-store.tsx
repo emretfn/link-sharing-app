@@ -1,31 +1,10 @@
 //Types
 import { SocialLink } from "@/lib/types";
+import { supabase } from "@/lib/utils";
 
 //Redux
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-//mock data
-const userLinks = [
-  {
-    id: "1",
-    platform: "github",
-    url: "github.com/emretfn",
-    order: 1,
-  },
-  {
-    id: "2",
-    platform: "twitter",
-    url: "twitter.com/emretfn",
-    order: 2,
-  },
-  {
-    id: "3",
-    platform: "linkedin",
-    url: "linkedin.com/in/emretfn",
-    order: 3,
-  },
-] as SocialLink[];
 
 type SocialLinksState = {
   socialLinks: SocialLink[];
@@ -41,11 +20,47 @@ const initialState = {
   error: undefined,
 } as SocialLinksState;
 
-//mock fetch
+interface FetchTypes {
+  links: SocialLink[];
+}
 export const fetchSocialLinks = createAsyncThunk(
   "socialLinks/fetchSocialLinks",
   async () => {
-    return Promise.resolve(userLinks);
+    const { data: userData } = await supabase.auth.getUser();
+    if (userData.user) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("links")
+        .order("links->order", { ascending: true })
+        .eq("id", userData.user.id)
+        .returns<{ links: SocialLink[] }[]>();
+
+      return data?.[0].links;
+    }
+    return null;
+  }
+);
+
+export const saveSocialLinks = createAsyncThunk(
+  "socialLinks/saveSocialLinks",
+  async (links: SocialLink[]) => {
+    const { data: userData } = await supabase.auth.getUser();
+
+    if (userData.user) {
+      console.log("links", links);
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({ links })
+        .eq("id", userData.user.id)
+        .select("*");
+      if (error) {
+        console.log("error", error);
+        throw error;
+      }
+      console.log("data", data);
+      return data;
+    }
+    return;
   }
 );
 
@@ -72,11 +87,11 @@ export const socialLinks = createSlice({
       state.socialLinks = updatedLinks;
       state.isUpdated = true;
     },
-    addLink: (state, action) => {
+    addLink: (state, action: PayloadAction<SocialLink>) => {
       state.socialLinks = [...state.socialLinks, action.payload];
       state.isUpdated = true;
     },
-    removeLink: (state, action) => {
+    removeLink: (state, action: PayloadAction<string>) => {
       // remove and update order
       const updatedLinks = state.socialLinks
         .filter((link) => link.id !== action.payload)
@@ -89,9 +104,26 @@ export const socialLinks = createSlice({
       state.socialLinks = updatedLinks;
       state.isUpdated = true;
     },
+    updateLink: (state, action) => {
+      const updatedLinks = state.socialLinks.map((link) => {
+        if (link.id === action.payload.id) {
+          return {
+            ...link,
+            ...action.payload,
+          };
+        }
+        return link;
+      });
+      state.socialLinks = updatedLinks;
+      state.isUpdated = true;
+    },
   },
   extraReducers: (builder) => {
+    // Fetch
     builder.addCase(fetchSocialLinks.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
+      }
       state.socialLinks = action.payload;
       state.loading = false;
     });
@@ -102,10 +134,22 @@ export const socialLinks = createSlice({
     builder.addCase(fetchSocialLinks.pending, (state, action) => {
       state.loading = true;
     });
+    // Save
+    builder.addCase(saveSocialLinks.fulfilled, (state, action) => {
+      state.isUpdated = false;
+      state.loading = false;
+    });
+    builder.addCase(saveSocialLinks.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    });
+    builder.addCase(saveSocialLinks.pending, (state, action) => {
+      state.loading = true;
+    });
   },
 });
 
-export const { reset, handleReorder, addLink, removeLink } =
+export const { reset, handleReorder, addLink, removeLink, updateLink } =
   socialLinks.actions;
 
 export default socialLinks.reducer;

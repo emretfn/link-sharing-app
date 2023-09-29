@@ -19,6 +19,7 @@ import EmptyState from "@/components/links/empty-state";
 
 //Constants
 import { SocialLinks } from "@/lib/constants";
+import { supabase } from "@/lib/utils";
 
 const DraggableLinkList = () => {
   const dispatch = useAppDispatch();
@@ -29,14 +30,17 @@ const DraggableLinkList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAdd = () => {
-    const newLink = {
-      id: uuid(),
-      platform: SocialLinks[0].value,
-      url: "",
-      order: storeLinks.length + 1,
-    };
-    dispatch(addLink(newLink));
+  const handleAdd = async () => {
+    const { data: userData } = await supabase.auth.getUser();
+    if (userData.user) {
+      const newLink = {
+        id: uuid(),
+        platform: SocialLinks[0].value,
+        url: "",
+        order: storeLinks.length + 1,
+      };
+      dispatch(addLink(newLink));
+    }
   };
 
   return (
