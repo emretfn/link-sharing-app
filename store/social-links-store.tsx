@@ -1,6 +1,6 @@
 //Types
 import { SocialLink } from "@/lib/types";
-import { supabase } from "@/lib/utils";
+import { checkUrlValidate, supabase } from "@/lib/utils";
 
 //Redux
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -45,6 +45,17 @@ export const saveSocialLinks = createAsyncThunk(
   "socialLinks/saveSocialLinks",
   async (links: SocialLink[]) => {
     const { data: userData } = await supabase.auth.getUser();
+    let isValid = true;
+
+    links.forEach((link) => {
+      if (checkUrlValidate(link.url)) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      return;
+    }
 
     if (userData.user) {
       console.log("links", links);

@@ -19,6 +19,8 @@ import { useAppDispatch } from "@/store";
 
 //Constants
 import { SocialLinks } from "@/lib/constants";
+import { FocusEvent, useState } from "react";
+import { checkUrlValidate } from "@/lib/utils";
 
 interface DraggableLinkItemProps {
   draggableId: string;
@@ -39,6 +41,15 @@ const DraggableLinkItem = ({
   const dispatch = useAppDispatch();
   const handleRemove = (id: string) => {
     dispatch(removeLink(id));
+  };
+  const [error, setError] = useState<string | null>(null);
+
+  const checkValidate = (e: FocusEvent<HTMLInputElement, Element>) => {
+    setError(null);
+    const error = checkUrlValidate(e.target.value);
+    if (error) {
+      setError(error);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +123,8 @@ const DraggableLinkItem = ({
               label="Link"
               value={link?.url}
               onChange={handleInputChange}
-              required
+              onBlur={checkValidate}
+              error={error}
             />
           </div>
         </div>
