@@ -17,6 +17,7 @@ interface Links {
   name: string;
   value: string;
   icon: any;
+  backgroundColor: string;
 }
 
 const SocialLinks: Links[] = [
@@ -24,71 +25,85 @@ const SocialLinks: Links[] = [
     name: "Github",
     value: "github",
     icon: IconGithub,
+    backgroundColor: "#1a1a1a",
   },
   {
     name: "Frontend Mentor",
     value: "frontend-mentor",
     icon: IconFrontendMentor,
+    backgroundColor: "#ffffff",
   },
   {
     name: "Twitter",
     value: "twitter",
     icon: IconTwitter,
+    backgroundColor: "#43b7e9",
   },
   {
     name: "Linkedin",
     value: "linkedin",
     icon: IconLinkedin,
+    backgroundColor: "#2d68ff",
   },
   {
     name: "Youtube",
     value: "youtube",
     icon: IconYoutube,
+    backgroundColor: "#ee3939",
   },
   {
     name: "Facebook",
     value: "facebook",
     icon: IconFacebook,
+    backgroundColor: "#2442ac",
   },
   {
     name: "Twitch",
     value: "twitch",
     icon: IconTwitch,
+    backgroundColor: "#ee3fc8",
   },
   {
     name: "Dev.to",
     value: "dev-to",
     icon: IconDevTo,
+    backgroundColor: "#333333",
   },
   {
     name: "Codewars",
     value: "codewars",
     icon: IconCodewars,
+    backgroundColor: "#8a1a50",
   },
   {
     name: "Codepen",
     value: "codepen",
     icon: IconCodepen,
+    backgroundColor: "#333333",
   },
   {
     name: "freeCodeCamp",
     value: "free-code-camp",
     icon: IconFreeCodeCamp,
+    backgroundColor: "#302267",
   },
   {
     name: "GitLab",
     value: "gitlab",
     icon: IconGitlab,
+    backgroundColor: "#eb4925",
   },
   {
     name: "Hashnode",
     value: "hashnode",
     icon: IconHashnode,
+    backgroundColor: "#0330d1",
   },
   {
     name: "Stack Overflow",
     value: "stack-overflow",
     icon: IconStackOverflow,
+    backgroundColor: "#ec7100",
   },
 ];
 
