@@ -1,7 +1,6 @@
 //Components
 import Caption from "@/components/caption";
 import DraggableLinkList from "@/components/links/draggable-link-list";
-import SaveButton from "@/components/links/save-button";
 
 const Page = async () => {
   return (
@@ -14,9 +13,6 @@ const Page = async () => {
         />
         {/* Links */}
         <DraggableLinkList />
-      </div>
-      <div className="px-10 py-6 border-t border-grey-border flex justify-end">
-        <SaveButton />
       </div>
     </div>
   );

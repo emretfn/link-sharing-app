@@ -30,11 +30,15 @@ const Select = ({ children, ...props }: SelectProps) => {
   return <SelectPrimitive.Root {...props}>{children}</SelectPrimitive.Root>;
 };
 
-const SelectTrigger = ({ children, ...props }: SelectTriggerProps) => {
+const SelectTrigger = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  SelectTriggerProps
+>(({ children, ...props }, ref) => {
   return (
     <SelectPrimitive.Trigger
       className="flex items-center justify-between w-full border outline-primary bg-white border-grey-border px-4 py-3 rounded-lg data-[state=open]:border-primary data-[state=open]:shadow-active "
       {...props}
+      ref={ref}
     >
       {children}
       <SelectPrimitive.Icon>
@@ -42,7 +46,7 @@ const SelectTrigger = ({ children, ...props }: SelectTriggerProps) => {
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
-};
+});
 
 const SelectContent = ({ children, ...props }: SelectContentProps) => {
   return (
