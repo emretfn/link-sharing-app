@@ -7,8 +7,14 @@ import IconProfile from "@/public/assets/images/icon-profile-details-header.svg"
 import Button from "@/components/ui/button";
 import MenuLink from "@/components/menu-link";
 import Link from "next/link";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-const Header = () => {
+const Header = async () => {
+  const supabase = createServerComponentClient({ cookies });
+
+  const { data: user } = await supabase.auth.getSession();
+
   return (
     <header className="h-20 bg-white rounded-xl px-6 py-4 flex items-center justify-between">
       {/* Logo */}
@@ -30,8 +36,7 @@ const Header = () => {
       {/* Preview Button */}
       <div>
         <Button asChild variant="secondary" className="py-3 px-4 tablet:px-7">
-          {/* TODO: Change username to dynamic */}
-          <Link href="/preview/username">
+          <Link href={`/${user.session?.user.id}`}>
             <span className="tablet:hidden">
               <IconEye />
             </span>

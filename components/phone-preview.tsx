@@ -2,10 +2,7 @@
 
 import { useAppSelector } from "@/store";
 import Image from "next/image";
-import IconArrowRight from "@/public/assets/images/icon-arrow-right.svg";
-import { SocialLink } from "@/lib/types";
-import { SocialLinks } from "@/lib/constants";
-import { createElement } from "react";
+import PreviewLink from "./preview-link";
 
 const PhonePreview = () => {
   const socialLinks = useAppSelector((state) => state.socialLinks.socialLinks);
@@ -38,33 +35,17 @@ const PhonePreview = () => {
         {/* Links */}
         <div className="flex flex-col gap-y-5">
           {socialLinks.map((link) => (
-            <PreviewLinks key={link.id} link={link} />
+            <PreviewLink
+              key={link.id}
+              link={link}
+              href={link.url}
+              variant="small"
+            />
           ))}
         </div>
       </div>
     </div>
   );
 };
-
-function PreviewLinks({ link }: { link: SocialLink }) {
-  const socialLink = SocialLinks.find((item) => item.value === link.platform);
-
-  if (socialLink) {
-    return (
-      <div
-        className="h-11 w-full px-4 py-[11px]  rounded-lg flex text-white items-center gap-x-2"
-        style={{ backgroundColor: socialLink.backgroundColor }}
-      >
-        {createElement(socialLink.previewIcon, {
-          className: "w-4 h-4",
-        })}
-
-        <span className="flex-1 body-s">{socialLink.name}</span>
-        <IconArrowRight />
-      </div>
-    );
-  }
-  return null;
-}
 
 export default PhonePreview;
