@@ -82,7 +82,7 @@ const DraggableLinkItem = ({ index, link, remove }: DraggableLinkItemProps) => {
                   <SelectContent>
                     {SocialLinks.map((link) => (
                       <SelectItem value={link.value} key={link.value}>
-                        <link.icon />
+                        <link.selectIcon />
                         <span>{link.name}</span>
                       </SelectItem>
                     ))}

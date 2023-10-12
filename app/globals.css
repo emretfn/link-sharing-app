@@ -31,4 +31,8 @@
   .checked-fill-primary[data-highlighted] path {
     @apply fill-primary;
   }
+
+  .fill-path-white path {
+    fill: white;
+  }
 }

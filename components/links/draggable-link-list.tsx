@@ -10,19 +10,22 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { supabase } from "@/lib/utils";
-
 //Components
 import Button from "@/components/ui/button";
 import DraggableLinkItem from "./draggable-link-item";
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import EmptyState from "@/components/links/empty-state";
-
+//Store
+import { useAppDispatch } from "@/store";
+import { setSocialLinks } from "@/store/social-links-store";
 //Constants
 import { SocialLinks } from "@/lib/constants";
+//Types
 import { SocialLink, SocialLinkForm } from "@/lib/types";
 import { SocialLinkSchema } from "@/lib/schemas";
 
 const DraggableLinkList = () => {
+  const dispatch = useAppDispatch();
   const methods = useForm<SocialLinkForm>({
     resolver: zodResolver(SocialLinkSchema),
   });
@@ -65,6 +68,10 @@ const DraggableLinkList = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    dispatch(setSocialLinks(fields));
+  }, [fields]);
+
   const onSubmit: SubmitHandler<SocialLinkForm> = async (formData) => {
     const { data: userData } = await supabase.auth.getUser();
     if (userData.user) {
@@ -84,8 +91,6 @@ const DraggableLinkList = () => {
   const handleReorder = (result: DropResult) => {
     if (result.destination) {
       move(result.source.index, result.destination.index);
-
-      // Update order without using fields
       const values = getValues();
       const newValues = values.socialLinks.map((item, index) => {
         return {
@@ -104,7 +109,6 @@ const DraggableLinkList = () => {
       url: "",
       order: getValues().socialLinks.length + 1,
     };
-
     append(newLink);
   };
 

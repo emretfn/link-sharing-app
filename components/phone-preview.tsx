@@ -1,6 +1,15 @@
+"use client";
+
+import { useAppSelector } from "@/store";
 import Image from "next/image";
+import IconArrowRight from "@/public/assets/images/icon-arrow-right.svg";
+import { SocialLink } from "@/lib/types";
+import { SocialLinks } from "@/lib/constants";
+import { createElement } from "react";
 
 const PhonePreview = () => {
+  const socialLinks = useAppSelector((state) => state.socialLinks.socialLinks);
+
   return (
     <div className="relative flex justify-center w-[307px] h-[631px] bg-phone-mockup ">
       <div className="flex flex-col gap-y-14 pt-[63.5px] w-[237px] h-full">
@@ -28,11 +37,34 @@ const PhonePreview = () => {
         </div>
         {/* Links */}
         <div className="flex flex-col gap-y-5">
-          <div className="h-11 w-full bg-primary rounded-lg"></div>
+          {socialLinks.map((link) => (
+            <PreviewLinks key={link.id} link={link} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+function PreviewLinks({ link }: { link: SocialLink }) {
+  const socialLink = SocialLinks.find((item) => item.value === link.platform);
+
+  if (socialLink) {
+    return (
+      <div
+        className="h-11 w-full px-4 py-[11px]  rounded-lg flex text-white items-center gap-x-2"
+        style={{ backgroundColor: socialLink.backgroundColor }}
+      >
+        {createElement(socialLink.previewIcon, {
+          className: "w-4 h-4",
+        })}
+
+        <span className="flex-1 body-s">{socialLink.name}</span>
+        <IconArrowRight />
+      </div>
+    );
+  }
+  return null;
+}
 
 export default PhonePreview;

@@ -1,3 +1,20 @@
+//PreviewIcon
+import PreviewIconGithub from "@/public/assets/preview-icons/github.svg";
+import PreviewIconFrontendMentor from "@/public/assets/preview-icons/frontend-mentor.svg";
+import PreviewIconTwitter from "@/public/assets/preview-icons/twitter.svg";
+import PreviewIconLinkedin from "@/public/assets/preview-icons/linkedin.svg";
+import PreviewIconYoutube from "@/public/assets/preview-icons/youtube.svg";
+import PreviewIconFacebook from "@/public/assets/preview-icons/facebook.svg";
+import PreviewIconTwitch from "@/public/assets/preview-icons/twitch.svg";
+import PreviewIconDevTo from "@/public/assets/preview-icons/devto.svg";
+import PreviewIconCodewars from "@/public/assets/preview-icons/codewars.svg";
+import PreviewIconCodepen from "@/public/assets/preview-icons/codepen.svg";
+import PreviewIconFreeCodeCamp from "@/public/assets/preview-icons/freecodecamp.svg";
+import PreviewIconGitlab from "@/public/assets/preview-icons/gitlab.svg";
+import PreviewIconHashnode from "@/public/assets/preview-icons/hashnode.svg";
+import PreviewIconStackOverflow from "@/public/assets/preview-icons/stackoverflow.svg";
+
+//SelectIcon
 import IconGithub from "@/public/assets/images/icon-github.svg";
 import IconFrontendMentor from "@/public/assets/images/icon-frontend-mentor.svg";
 import IconTwitter from "@/public/assets/images/icon-twitter.svg";
@@ -16,7 +33,8 @@ import IconStackOverflow from "@/public/assets/images/icon-stack-overflow.svg";
 interface Links {
   name: string;
   value: string;
-  icon: any;
+  selectIcon: any;
+  previewIcon: any;
   backgroundColor: string;
 }
 
@@ -24,85 +42,99 @@ const SocialLinks: Links[] = [
   {
     name: "Github",
     value: "github",
-    icon: IconGithub,
+    previewIcon: PreviewIconGithub,
+    selectIcon: IconGithub,
     backgroundColor: "#1a1a1a",
   },
   {
     name: "Frontend Mentor",
     value: "frontend-mentor",
-    icon: IconFrontendMentor,
+    previewIcon: PreviewIconFrontendMentor,
+    selectIcon: IconFrontendMentor,
     backgroundColor: "#ffffff",
   },
   {
     name: "Twitter",
     value: "twitter",
-    icon: IconTwitter,
+    previewIcon: PreviewIconTwitter,
+    selectIcon: IconTwitter,
     backgroundColor: "#43b7e9",
   },
   {
     name: "Linkedin",
     value: "linkedin",
-    icon: IconLinkedin,
+    previewIcon: PreviewIconLinkedin,
+    selectIcon: IconLinkedin,
     backgroundColor: "#2d68ff",
   },
   {
     name: "Youtube",
     value: "youtube",
-    icon: IconYoutube,
+    previewIcon: PreviewIconYoutube,
+    selectIcon: IconYoutube,
     backgroundColor: "#ee3939",
   },
   {
     name: "Facebook",
     value: "facebook",
-    icon: IconFacebook,
+    previewIcon: PreviewIconFacebook,
+    selectIcon: IconFacebook,
     backgroundColor: "#2442ac",
   },
   {
     name: "Twitch",
     value: "twitch",
-    icon: IconTwitch,
+    previewIcon: PreviewIconTwitch,
+    selectIcon: IconTwitch,
     backgroundColor: "#ee3fc8",
   },
   {
     name: "Dev.to",
     value: "dev-to",
-    icon: IconDevTo,
+    previewIcon: PreviewIconDevTo,
+    selectIcon: IconDevTo,
     backgroundColor: "#333333",
   },
   {
     name: "Codewars",
     value: "codewars",
-    icon: IconCodewars,
+    previewIcon: PreviewIconCodewars,
+    selectIcon: IconCodewars,
     backgroundColor: "#8a1a50",
   },
   {
     name: "Codepen",
     value: "codepen",
-    icon: IconCodepen,
+    previewIcon: PreviewIconCodepen,
+    selectIcon: IconCodepen,
     backgroundColor: "#333333",
   },
   {
     name: "freeCodeCamp",
     value: "free-code-camp",
-    icon: IconFreeCodeCamp,
+    previewIcon: PreviewIconFreeCodeCamp,
+    selectIcon: IconFreeCodeCamp,
     backgroundColor: "#302267",
   },
   {
     name: "GitLab",
     value: "gitlab",
-    icon: IconGitlab,
+    previewIcon: PreviewIconGitlab,
+    selectIcon: IconGitlab,
     backgroundColor: "#eb4925",
   },
   {
     name: "Hashnode",
     value: "hashnode",
-    icon: IconHashnode,
+    previewIcon: PreviewIconHashnode,
+    selectIcon: IconHashnode,
     backgroundColor: "#0330d1",
   },
   {
     name: "Stack Overflow",
     value: "stack-overflow",
-    icon: IconStackOverflow,
+    previewIcon: PreviewIconStackOverflow,
+    selectIcon: IconStackOverflow,
     backgroundColor: "#ec7100",
   },
 ];
