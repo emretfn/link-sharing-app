@@ -47,6 +47,7 @@ const SelectTrigger = React.forwardRef<
     </SelectPrimitive.Trigger>
   );
 });
+SelectTrigger.displayName = "SelectTrigger";
 
 const SelectContent = ({ children, ...props }: SelectContentProps) => {
   return (

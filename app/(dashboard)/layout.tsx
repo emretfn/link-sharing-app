@@ -1,15 +1,16 @@
 //Components
 import Header from "@/components/header";
 import PhonePreview from "@/components/phone-preview";
-import { useGetServerSideUser } from "@/hooks/useGetServerSideUser";
+import { getServerSideUser } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await useGetServerSideUser();
+  const { user } = await getServerSideUser({ cookies });
 
   if (!user) {
     redirect("/login");

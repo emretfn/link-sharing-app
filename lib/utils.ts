@@ -1,8 +1,8 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { SocialLinks } from "@/lib/constants";
-import { createElement } from "react";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -17,4 +17,21 @@ export const uploadImage = async (file: File, userId: string) => {
     });
   if (error) throw error;
   return `${process.env.NEXT_PUBLIC_SUPABASE_CDN_URL}${data.path}`;
+};
+
+export const getServerSideUser = async ({
+  cookies,
+}: {
+  cookies: () => ReadonlyRequestCookies;
+}) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: user, error } = await supabase.auth.getUser();
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    user: user.user,
+  };
 };
