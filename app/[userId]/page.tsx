@@ -53,7 +53,7 @@ const LinksPage = async ({ params }: LinksPageProps) => {
         </div>
         {/* Links */}
         <div className="flex flex-col gap-y-5">
-          {user.links.map((link: SocialLink) => (
+          {user.links?.map((link: SocialLink) => (
             <PreviewLink key={link.id} link={link} href={link.url} />
           ))}
         </div>
