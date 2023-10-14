@@ -38,16 +38,20 @@ const LinksPage = async ({ params }: LinksPageProps) => {
         {/* Profile */}
         <div className="flex flex-col items-center gap-y-[25px]">
           {/* Image */}
-          <Image
-            alt="emre tufan"
-            src={user.avatar_url}
-            width={100}
-            height={100}
-            className="border-4 border-primary rounded-full object-cover aspect-square"
-          ></Image>
+          {user.avatar_url && (
+            <Image
+              alt="emre tufan"
+              src={user.avatar_url}
+              width={100}
+              height={100}
+              className="border-4 border-primary rounded-full object-cover aspect-square"
+            ></Image>
+          )}
           {/* Caption */}
           <div className=" w-full text-center flex flex-col gap-y-2">
-            <p className="heading-m">{`${user.first_name} ${user.last_name}`}</p>
+            {user.first_name && user.last_name && (
+              <p className="heading-m">{`${user.first_name} ${user.last_name}`}</p>
+            )}
             <p className="body-m text-grey">{user.email}</p>
           </div>
         </div>
