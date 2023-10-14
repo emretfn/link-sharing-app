@@ -1,12 +1,11 @@
 import Caption from "@/components/caption";
 import ProfileForm from "@/components/forms/profile-form";
+import { createServerSupabaseClient } from "@/lib/serverUtils";
 import { Profile } from "@/lib/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { session },

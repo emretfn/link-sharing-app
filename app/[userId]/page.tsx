@@ -1,11 +1,10 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
 import { Profile, SocialLink } from "@/lib/types";
 //Components
 import PreviewLink from "@/components/preview-link";
 import PreviewHeader from "@/components/preview/preview-header";
 import Image from "next/image";
+import { createServerSupabaseClient } from "@/lib/serverUtils";
 
 interface LinksPageProps {
   params: {
@@ -14,7 +13,7 @@ interface LinksPageProps {
 }
 
 const LinksPage = async ({ params }: LinksPageProps) => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerSupabaseClient();
   const { data: user } = await supabase
     .from("profiles")
     .select("*")

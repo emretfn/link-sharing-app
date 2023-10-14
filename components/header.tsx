@@ -7,11 +7,10 @@ import IconProfile from "@/public/assets/images/icon-profile-details-header.svg"
 import Button from "@/components/ui/button";
 import MenuLink from "@/components/menu-link";
 import Link from "next/link";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerSupabaseClient } from "@/lib/serverUtils";
 
 const Header = async () => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerSupabaseClient();
 
   const { data: user } = await supabase.auth.getSession();
 

@@ -10,6 +10,9 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "qjnkhylwlrikyvssmfdk.supabase.co"],
   },
+  experimental: {
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig;
