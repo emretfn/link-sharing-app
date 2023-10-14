@@ -107,7 +107,7 @@ const DraggableLinkList = () => {
       id: uuid(),
       platform: SocialLinks[0].value,
       url: "",
-      order: getValues().socialLinks.length + 1,
+      order: getValues().socialLinks?.length + 1 || 1,
     };
     append(newLink);
   };
