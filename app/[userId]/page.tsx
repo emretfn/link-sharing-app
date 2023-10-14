@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
-import { SocialLink } from "@/lib/types";
+import { Profile, SocialLink } from "@/lib/types";
 //Components
 import PreviewLink from "@/components/preview-link";
 import PreviewHeader from "@/components/preview/preview-header";
@@ -19,7 +19,7 @@ const LinksPage = async ({ params }: LinksPageProps) => {
     .from("profiles")
     .select("*")
     .eq("id", params.userId)
-    .single();
+    .single<Profile>();
 
   if (!user) {
     notFound();
@@ -41,15 +41,15 @@ const LinksPage = async ({ params }: LinksPageProps) => {
           {/* Image */}
           <Image
             alt="emre tufan"
-            src="https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1966&q=80"
+            src={user.avatar_url}
             width={100}
             height={100}
             className="border-4 border-primary rounded-full object-cover aspect-square"
           ></Image>
           {/* Caption */}
           <div className=" w-full text-center flex flex-col gap-y-2">
-            <p className="heading-m">Ben Wright</p>
-            <p className="body-m text-grey">ben@example.com</p>
+            <p className="heading-m">{`${user.first_name} ${user.last_name}`}</p>
+            <p className="body-m text-grey">{user.email}</p>
           </div>
         </div>
         {/* Links */}
