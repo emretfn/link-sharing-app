@@ -1,4 +1,9 @@
-import { ProfileSchema, SocialLinkSchema } from "@/lib/schemas";
+import {
+  LoginFormSchema,
+  ProfileSchema,
+  RegisterFormSchema,
+  SocialLinkSchema,
+} from "@/lib/schemas";
 import { z } from "zod";
 
 export type SocialLink = {
@@ -14,8 +19,10 @@ export type Profile = {
   last_name: string;
   email: string;
   avatar_url: string;
-  links: SocialLink[];
+  links?: SocialLink[];
 };
 
 export type SocialLinkForm = z.infer<typeof SocialLinkSchema>;
 export type ProfileForm = z.infer<typeof ProfileSchema>;
+export type LoginForm = z.infer<typeof LoginFormSchema>;
+export type RegisterForm = z.infer<typeof RegisterFormSchema>;

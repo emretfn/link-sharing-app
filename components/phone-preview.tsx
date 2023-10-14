@@ -14,7 +14,6 @@ interface PhonePreviewProps {
 
 const PhonePreview = ({ user }: PhonePreviewProps) => {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const socialLinks = useAppSelector((state) => state.socialLinks.socialLinks);
 
   useEffect(() => {
     (async () => {
@@ -35,9 +34,9 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
         <div className="flex flex-col items-center gap-y-[25px] h-[158px]">
           {/* Image */}
           <div className="relative flex justify-center items-center w-24 h-24 bg-[#eeeeee] outline outline-4 outline-primary bg rounded-full overflow-hidden shrink-0">
-            {profile && (
+            {profile?.avatar_url && (
               <Image
-                alt="emre tufan"
+                alt={`${profile.first_name} ${profile.last_name} profile picture`}
                 src={profile.avatar_url}
                 width={100}
                 height={100}
@@ -48,7 +47,9 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
           {/* Caption */}
           <div className="bg-white w-full text-center flex flex-col gap-y-2">
             <p className="font-semibold text-[18px] leading-[150%]">
-              {profile ? `${profile.first_name} ${profile.last_name}` : " "}
+              {profile && profile.first_name && profile.last_name
+                ? `${profile.first_name} ${profile.last_name}`
+                : ""}
             </p>
             <p className="text-grey text-[14px] leading-[150%]">
               {profile ? profile.email : " "}
@@ -57,7 +58,7 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
         </div>
         {/* Links */}
         <div className="flex flex-col gap-y-5">
-          {profile?.links.map((link) => (
+          {profile?.links?.map((link) => (
             <PreviewLink
               key={link.id}
               link={link}

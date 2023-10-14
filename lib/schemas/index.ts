@@ -24,3 +24,39 @@ export const ProfileSchema = z.object({
     .email({ message: "Please check the email" }),
   avatarUrl: z.string().optional().nullable(),
 });
+
+export const LoginFormSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: "Can't be empty" })
+    .email({ message: "Please check the email" }),
+  password: z
+    .string()
+    .trim()
+    .min(1, { message: "Can't be empty" })
+    .min(8, { message: "Password must be at least 8 characters long" }),
+});
+
+export const RegisterFormSchema = z
+  .object({
+    email: z
+      .string()
+      .trim()
+      .min(1, { message: "Can't be empty" })
+      .email({ message: "Please check the email" }),
+    password: z
+      .string()
+      .trim()
+      .min(1, { message: "Can't be empty" })
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    confirmPassword: z
+      .string()
+      .trim()
+      .min(1, { message: "Can't be empty" })
+      .min(8, { message: "Password must be at least 8 characters long" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
