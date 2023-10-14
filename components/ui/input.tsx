@@ -1,18 +1,23 @@
 import { cn } from "@/lib/utils";
+import { ClassValue } from "clsx";
 import React from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
   error?: string | null;
   label?: string;
+  containerClassName?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ icon, type, className, error, label, ...props }, ref) => {
+  (
+    { icon, type, className, error, label, containerClassName, ...props },
+    ref
+  ) => {
     return (
-      <label className="flex flex-col gap-y-1">
-        {label && <span className="body-s">{label}</span>}
-        <div className="relative">
+      <label className={cn("flex flex-col gap-y-1", containerClassName)}>
+        {label && <span className="body-s tablet:body-m w-full">{label}</span>}
+        <div className="relative w-full">
           {icon && (
             <span className="flex h-4 w-4 justify-center items-center absolute top-1/2 left-4 -translate-y-1/2 overflow-hidden">
               {icon}

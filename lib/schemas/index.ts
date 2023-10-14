@@ -13,3 +13,14 @@ export const SocialLinkSchema = z.object({
     })
   ),
 });
+
+export const ProfileSchema = z.object({
+  firstName: z.string().trim().min(1, { message: "Can't be empty" }),
+  lastName: z.string().trim().min(1, { message: "Can't be empty" }),
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: "Can't be empty" })
+    .email({ message: "Please check the email" }),
+  avatarUrl: z.string().optional().nullable(),
+});

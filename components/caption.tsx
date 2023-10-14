@@ -26,8 +26,10 @@ const Caption = ({
         className
       )}
     >
-      <p className="heading-m">{title}</p>
-      <p className="text-grey">{description}</p>
+      <p className="text-2xl leading-[150%] font-bold tablet:heading-m">
+        {title}
+      </p>
+      <p className="text-grey body-m">{description}</p>
     </div>
   );
 };

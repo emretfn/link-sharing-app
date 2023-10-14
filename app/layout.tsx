@@ -12,6 +12,7 @@ import localFont from "next/font/local";
 
 const instrumentSans = localFont({
   src: "../public/assets/fonts/InstrumentSans-VariableFont_wdth,wght.ttf",
+  variable: "--font-instrument-sans",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ReduxProvider>
-        <body className={instrumentSans.className}>{children}</body>
+        <body className={`${instrumentSans.className}`}>{children}</body>
       </ReduxProvider>
     </html>
   );

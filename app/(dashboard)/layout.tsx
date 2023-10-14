@@ -16,10 +16,12 @@ export default function DashboardLayout({
 
       {/* Preview and Page */}
       <div className="flex flex-1 p-4 tablet:p-6 tablet:pt-0 desktop:max-w-[1392px] desktop:mx-auto w-full desktop:gap-x-6 h-full items-start">
-        <section className="hidden sticky top-0 desktop:flex justify-center items-center bg-white rounded-xl p-16 w-[35rem] shrink-0">
+        <section className="hidden sticky top-0 desktop:flex justify-center items-center bg-white rounded-xl p-16 w-[35rem] shrink-0 h-full">
           <PhonePreview />
         </section>
-        <section className="bg-white rounded-xl w-full">{children}</section>
+        <section className="bg-white rounded-xl w-full h-full">
+          {children}
+        </section>
       </div>
     </main>
   );

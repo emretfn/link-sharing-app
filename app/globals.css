@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    font-family: var(--font-instrument-sans);
+  }
   body {
     @apply text-grey-dark bg-grey-light text-base leading-[150%];
   }
@@ -30,6 +34,10 @@
   .checked-fill-primary[data-state="checked"] path,
   .checked-fill-primary[data-highlighted] path {
     @apply fill-primary;
+  }
+
+  .custom-fill-white path {
+    @apply fill-white;
   }
 
   .fill-path-white path {
