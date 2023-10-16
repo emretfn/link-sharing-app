@@ -23,6 +23,8 @@ import { SocialLinks } from "@/lib/constants";
 //Types
 import { SocialLink, SocialLinkForm } from "@/lib/types";
 import { SocialLinkSchema } from "@/lib/schemas";
+import toast from "react-hot-toast";
+import SaveIcon from "@/public/assets/images/icon-changes-saved.svg";
 
 const DraggableLinkList = () => {
   const dispatch = useAppDispatch();
@@ -73,19 +75,24 @@ const DraggableLinkList = () => {
   }, [fields]);
 
   const onSubmit: SubmitHandler<SocialLinkForm> = async (formData) => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (userData.user) {
-      const { data, error } = await supabase
-        .from("profiles")
-        .update({ links: formData.socialLinks })
-        .eq("id", userData.user.id)
-        .select("*");
-      if (error) {
-        console.log("error", error);
-        throw error;
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData.user) {
+        const { data, error } = await supabase
+          .from("profiles")
+          .update({ links: formData.socialLinks })
+          .eq("id", userData.user.id)
+          .select("*");
+        if (error) throw error;
+        toast.success("Links saved successfully!", {
+          icon: <SaveIcon />,
+        });
       }
+      reset(formData);
+    } catch (error: any) {
+      toast.error(error.message);
+      console.error(error.message);
     }
-    reset(formData);
   };
 
   const handleReorder = (result: DropResult) => {

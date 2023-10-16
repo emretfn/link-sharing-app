@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import UploadImage from "../upload-image";
@@ -8,7 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProfileSchema } from "@/lib/schemas";
 import { Profile, ProfileForm } from "@/lib/types";
 import { supabase, uploadImage } from "@/lib/utils";
-import { User } from "@supabase/supabase-js";
+import toast from "react-hot-toast";
+import SaveIcon from "@/public/assets/images/icon-changes-saved.svg";
 
 interface ProfileFormProps {
   profile: Profile;
@@ -31,27 +32,34 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
     },
   });
   const onSubmit: SubmitHandler<ProfileForm> = async (data) => {
-    let imageUrl = null;
-    if (image) {
-      //upload image
-      imageUrl = await uploadImage(image, profile.id);
+    try {
+      let imageUrl = null;
+      if (image) {
+        //upload image
+        imageUrl = await uploadImage(image, profile.id);
+      }
+      const newData = {
+        first_name: data.firstName ?? profile.first_name,
+        last_name: data.lastName ?? profile.last_name,
+        email: data.email ?? profile.email,
+        avatar_url: imageUrl ?? profile.avatar_url,
+      };
+      //update profile
+      const { data: updateData, error } = await supabase
+        .from("profiles")
+        .update({ ...newData })
+        .eq("id", profile.id)
+        .single<Profile>();
+      if (error) {
+        throw error;
+      }
+      reset({ ...newData }, { keepDirty: false });
+      toast.success("Your changes have been successfully saved!", {
+        icon: <SaveIcon />,
+      });
+    } catch (error: any) {
+      toast.error(error.message);
     }
-    const newData = {
-      first_name: data.firstName ?? profile.first_name,
-      last_name: data.lastName ?? profile.last_name,
-      email: data.email ?? profile.email,
-      avatar_url: imageUrl ?? profile.avatar_url,
-    };
-    //update profile
-    const { data: updateData, error } = await supabase
-      .from("profiles")
-      .update({ ...newData })
-      .eq("id", profile.id)
-      .single<Profile>();
-    if (error) {
-      throw error;
-    }
-    reset({ ...newData }, { keepDirty: false });
   };
 
   return (

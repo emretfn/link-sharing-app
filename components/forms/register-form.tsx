@@ -11,6 +11,7 @@ import { RegisterFormSchema } from "@/lib/schemas";
 import { RegisterForm } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -31,9 +32,11 @@ const RegisterForm = () => {
       });
       if (error) throw error;
 
+      toast.success("Confirmation email sent! Please check your inbox.");
       router.push("/login");
     } catch (error: any) {
       console.error(error.message);
+      toast.error(error.message);
     }
   };
 

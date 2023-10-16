@@ -11,6 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormSchema } from "@/lib/schemas";
 import { LoginForm } from "@/lib/types";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -30,10 +31,11 @@ const LoginForm = () => {
         password: formData.password,
       });
       if (error) throw error;
-
+      toast.success("Logged in successfully!");
       router.push("/dashboard/links");
     } catch (error: any) {
       console.error(error.message);
+      toast.error(error.message);
     }
   };
 

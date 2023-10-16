@@ -43,4 +43,16 @@
   .fill-path-white path {
     fill: white;
   }
+
+  .toaster {
+    @apply !bg-grey-dark !text-grey-light !rounded-xl !px-6 !py-4 gap-x-2 !max-w-md;
+  }
+
+  .toaster > * {
+    @apply flex-shrink-0;
+  }
+
+  .toaster > div {
+    @apply m-0;
+  }
 }

@@ -1,5 +1,6 @@
 //Providers
 import ReduxProvider from "@/store/provider";
+import { Toaster } from "react-hot-toast";
 
 //assets
 import "./globals.css";
@@ -28,7 +29,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ReduxProvider>
-        <body className={`${instrumentSans.className}`}>{children}</body>
+        <body className={`${instrumentSans.className}`}>
+          {children}
+          <Toaster
+            position="bottom-center"
+            containerClassName="toaster-container"
+            toastOptions={{
+              className: "toaster",
+            }}
+          />
+        </body>
       </ReduxProvider>
     </html>
   );
