@@ -1,6 +1,6 @@
 "use client";
 //Hooks
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import {
   useFieldArray,
@@ -25,8 +25,10 @@ import { SocialLink, SocialLinkForm } from "@/lib/types";
 import { SocialLinkSchema } from "@/lib/schemas";
 import toast from "react-hot-toast";
 import SaveIcon from "@/public/assets/images/icon-changes-saved.svg";
+import Loader from "@/public/assets/images/icon-loader.svg";
 
 const DraggableLinkList = () => {
+  const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const methods = useForm<SocialLinkForm>({
     resolver: zodResolver(SocialLinkSchema),
@@ -45,24 +47,27 @@ const DraggableLinkList = () => {
   });
 
   const fetchData = async () => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (userData.user) {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("links")
-        .order("links->order", { ascending: true })
-        .eq("id", userData.user.id)
-        .returns<{ links: SocialLink[] }[]>();
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData.user) {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("links")
+          .order("links->order", { ascending: true })
+          .eq("id", userData.user.id)
+          .returns<{ links: SocialLink[] }[]>();
 
-      if (error) {
-        console.log("error", error);
-        throw error;
-      }
+        if (error) throw error;
 
-      if (data) {
-        const links = data[0].links;
-        reset({ socialLinks: links });
+        if (data) {
+          const links = data[0].links;
+          reset({ socialLinks: links });
+        }
       }
+    } catch (error: any) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,7 +133,11 @@ const DraggableLinkList = () => {
 
         <DragDropContext onDragEnd={handleReorder}>
           <div className="w-full flex-1">
-            {fields.length > 0 ? (
+            {loading ? (
+              <div className="flex items-center justify-center h-40 w-full ">
+                <Loader className="animate-spin " />
+              </div>
+            ) : fields.length > 0 ? (
               <Droppable droppableId="social-links">
                 {(provided) => (
                   <div
