@@ -47,9 +47,11 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
           {/* Caption */}
           <div className="bg-white w-full text-center flex flex-col gap-y-2">
             <p className="font-semibold text-[18px] leading-[150%]">
-              {profile && profile.first_name && profile.last_name
-                ? `${profile.first_name} ${profile.last_name}`
-                : ""}
+              {profile && profile.first_name && profile.last_name ? (
+                `${profile.first_name} ${profile.last_name}`
+              ) : (
+                <span className="h-7 block"></span>
+              )}
             </p>
             <p className="text-grey text-[14px] leading-[150%]">
               {profile ? profile.email : " "}

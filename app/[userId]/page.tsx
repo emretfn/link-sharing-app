@@ -38,7 +38,7 @@ const LinksPage = async ({ params }: LinksPageProps) => {
         {/* Profile */}
         <div className="flex flex-col items-center gap-y-[25px]">
           {/* Image */}
-          {user.avatar_url && (
+          {user.avatar_url ? (
             <Image
               alt="emre tufan"
               src={user.avatar_url}
@@ -46,6 +46,8 @@ const LinksPage = async ({ params }: LinksPageProps) => {
               height={100}
               className="border-4 border-primary rounded-full object-cover aspect-square"
             ></Image>
+          ) : (
+            <div className="h-[6.25rem] w-[6.25rem] bg-gray-200 rounded-full border-4 border-primary"></div>
           )}
           {/* Caption */}
           <div className=" w-full text-center flex flex-col gap-y-2">
