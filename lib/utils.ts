@@ -13,6 +13,7 @@ export const uploadImage = async (file: File, userId: string) => {
     .from("avatars")
     .upload(`${userId}/avatar.png`, file, {
       upsert: true,
+      cacheControl: "60",
     });
   if (error) throw error;
   return `${process.env.NEXT_PUBLIC_SUPABASE_CDN_URL}${data.path}`;

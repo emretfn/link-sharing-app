@@ -12,8 +12,6 @@ interface LinksPageProps {
   };
 }
 
-export const revalidate = 0;
-
 const LinksPage = async ({ params }: LinksPageProps) => {
   const supabase = createServerSupabaseClient();
   const { data: user } = await supabase

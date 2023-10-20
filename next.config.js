@@ -9,6 +9,7 @@ const nextConfig = {
   },
   images: {
     domains: ["images.unsplash.com", "qjnkhylwlrikyvssmfdk.supabase.co"],
+    minimumCacheTTL: 60,
   },
   experimental: {
     serverActions: true,
