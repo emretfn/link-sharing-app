@@ -32,6 +32,7 @@ const UploadImage = ({ userImage, onImageSelect }: UploadImageProps) => {
               width={193}
               height={193}
               className="aspect-square object-cover"
+              unoptimized
             />
             <div className="absolute top-0 left-0 w-full h-full flex flex-col gap-y-2 items-center justify-center bg-black/50">
               <span className="custom-fill-white">

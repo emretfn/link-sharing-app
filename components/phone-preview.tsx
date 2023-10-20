@@ -41,6 +41,7 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
                 width={100}
                 height={100}
                 className="aspect-square object-cover"
+                unoptimized
               ></Image>
             )}
           </div>

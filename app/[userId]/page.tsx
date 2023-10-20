@@ -12,6 +12,8 @@ interface LinksPageProps {
   };
 }
 
+export const revalidate = 0;
+
 const LinksPage = async ({ params }: LinksPageProps) => {
   const supabase = createServerSupabaseClient();
   const { data: user } = await supabase
@@ -45,6 +47,7 @@ const LinksPage = async ({ params }: LinksPageProps) => {
               width={100}
               height={100}
               className="border-4 border-primary rounded-full object-cover aspect-square"
+              unoptimized
             ></Image>
           ) : (
             <div className="h-[6.25rem] w-[6.25rem] bg-gray-200 rounded-full border-4 border-primary"></div>
