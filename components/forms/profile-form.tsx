@@ -22,6 +22,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
     handleSubmit,
     formState: { isDirty, errors },
     reset,
+    setValue,
   } = useForm<ProfileForm>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -62,6 +63,11 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
     }
   };
 
+  const handleImageSelect = (image: File) => {
+    setImage(image);
+    setValue("avatarUrl", " ", { shouldDirty: true });
+  };
+
   return (
     <form className="flex flex-col gap-y-6" onSubmit={handleSubmit(onSubmit)}>
       {/* Image */}
@@ -76,7 +82,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
                 ? profile.avatar_url
                 : null
             }
-            onImageSelect={(image) => setImage(image)}
+            onImageSelect={handleImageSelect}
           />
           <span className="body-s text-grey">
             Image must be below 1024x1024px. Use PNG or JPG format.
