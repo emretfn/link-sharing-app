@@ -1,6 +1,7 @@
 //Providers
 import ReduxProvider from "@/store/provider";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from "nextjs-toploader";
 
 //assets
 import "./globals.css";
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <ReduxProvider>
         <body className={`${instrumentSans.className}`}>
+          <NextTopLoader color="#633CFF" showSpinner={false} />
           {children}
           <Toaster
             position="bottom-center"
