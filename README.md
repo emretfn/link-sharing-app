@@ -1,34 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Mentor - Link-sharing app solution
 
-## Getting Started
+This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+- [Author](#author)
+
+**Note: Delete this note and update the table of contents based on what sections you keep.**
+
+## Overview
+
+### The challenge
+
+Users should be able to:
+
+- Create, read, update, delete links and see previews in the mobile mockup
+- Receive validations if the links form is submitted without a URL or with the wrong URL pattern for the platform
+- Drag and drop links to reorder them
+- Add profile details like profile picture, first name, last name, and email
+- Receive validations if the profile details form is saved with no first or last name
+- Preview their devlinks profile and copy the link to their clipboard
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
+- **Bonus**: Save details to a database (build the project as a full-stack app)
+- **Bonus**: Create an account and log in (add user authentication to the full-stack app)
+
+### Screenshot
+
+![](./public/project-images/login-screen.png)
+![](./public/project-images/register-screen.png)
+![](./public/project-images/links-screen.png)
+![](./public/project-images/profile-screen.png)
+![](./public/project-images/preview-screen.png)
+
+### Links
+
+- [Solution URL](https://www.frontendmentor.io/solutions/link-sharing-app-If7HW9-ksw)
+- [Live site URL](https://link-sharing.emretufan.dev)
+
+## My process
+
+### Built with
+
+- Nextjs
+- Supabase
+- Tailwindcss
+- Zustand
+
+### What I learned
+
+One of the hardest parts was creating a dynamic form and showing the social media links that were shown instantly on the phone mockup. After some research, I found useFieldArray in react-hook-form, which made it much easier to create a dynamic form. I also used the watch feature from react-hook-form to keep the latest information in the store with zustand and show the necessary information on the phone mockup.
+
+```tsx
+const methods = useForm<SocialLinkForm>({
+  resolver: zodResolver(SocialLinkSchema),
+});
+const {
+  getValues,
+  reset,
+  handleSubmit,
+  formState: { isDirty },
+  control,
+  watch,
+} = methods;
+
+const { fields, append, remove, move } = useFieldArray<SocialLinkForm>({
+  control,
+  name: "socialLinks",
+});
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```tsx
+useEffect(() => {
+  const subscription = watch((value) => {
+    setSocialLinks(value.socialLinks as any);
+  });
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  return () => subscription.unsubscribe();
+}, [watch]);
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Apart from that, creating RLS (Row Level Security) on Supabase was a bit difficult for me. But I think I have increased the security of the application by creating RLS policies.
 
-## Learn More
+### Continued development
 
-To learn more about Next.js, take a look at the following resources:
+I want to focus on unit tests and e2e tests in the future. I will try to add these tests to this project as much as I can. I plan to use Jest in unit tests and cypress in e2e tests and focus on them.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Frontend Mentor - [@emretfn](https://www.frontendmentor.io/profile/emretfn)
+- Twitter - [@tfnemree](https://www.twitter.com/tfnemree)
