@@ -1,5 +1,4 @@
 //Providers
-import ReduxProvider from "@/store/provider";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 
@@ -29,19 +28,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ReduxProvider>
-        <body className={`${instrumentSans.className}`}>
-          <NextTopLoader color="#633CFF" showSpinner={false} />
-          {children}
-          <Toaster
-            position="bottom-center"
-            containerClassName="toaster-container"
-            toastOptions={{
-              className: "toaster",
-            }}
-          />
-        </body>
-      </ReduxProvider>
+      <body className={`${instrumentSans.className}`}>
+        <NextTopLoader color="#633CFF" showSpinner={false} />
+        {children}
+        <Toaster
+          position="bottom-center"
+          containerClassName="toaster-container"
+          toastOptions={{
+            className: "toaster",
+          }}
+        />
+      </body>
     </html>
   );
 }

@@ -1,12 +1,13 @@
 "use client";
 
-import { useAppSelector } from "@/store";
 import Image from "next/image";
 import PreviewLink from "./preview-link";
 import { supabase } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { Profile } from "@/lib/types";
+import { useSocialLinks } from "@/store/useSocialLinks";
+import { usePathname } from "next/navigation";
 
 interface PhonePreviewProps {
   user: User;
@@ -14,6 +15,7 @@ interface PhonePreviewProps {
 
 const PhonePreview = ({ user }: PhonePreviewProps) => {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const { socialLinks } = useSocialLinks();
 
   useEffect(() => {
     (async () => {
@@ -26,6 +28,16 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
       setProfile(profile);
     })();
   }, []);
+
+  const pathname = usePathname();
+  const isProfilePage = useMemo(
+    () => pathname.split("/").pop() === "profile",
+    [pathname]
+  );
+  const links = useMemo(
+    () => (isProfilePage ? profile?.links || [] : socialLinks),
+    [profile, socialLinks, isProfilePage]
+  );
 
   return (
     <div className="relative flex justify-center w-[307px] h-[631px] bg-phone-mockup ">
@@ -61,7 +73,7 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
         </div>
         {/* Links */}
         <div className="flex flex-col gap-y-5">
-          {profile?.links?.map((link) => (
+          {links.map((link) => (
             <PreviewLink
               key={link.id}
               link={link}

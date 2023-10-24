@@ -15,9 +15,7 @@ import Button from "@/components/ui/button";
 import DraggableLinkItem from "./draggable-link-item";
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import EmptyState from "@/components/links/empty-state";
-//Store
-import { useAppDispatch } from "@/store";
-import { setSocialLinks } from "@/store/social-links-store";
+
 //Constants
 import { SocialLinks } from "@/lib/constants";
 //Types
@@ -26,10 +24,10 @@ import { SocialLinkSchema } from "@/lib/schemas";
 import toast from "react-hot-toast";
 import SaveIcon from "@/public/assets/images/icon-changes-saved.svg";
 import Loader from "@/public/assets/images/icon-loader.svg";
+import { useSocialLinks } from "@/store/useSocialLinks";
 
 const DraggableLinkList = () => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useAppDispatch();
   const methods = useForm<SocialLinkForm>({
     resolver: zodResolver(SocialLinkSchema),
   });
@@ -39,6 +37,7 @@ const DraggableLinkList = () => {
     handleSubmit,
     formState: { isDirty },
     control,
+    watch,
   } = methods;
 
   const { fields, append, remove, move } = useFieldArray<SocialLinkForm>({
@@ -46,38 +45,42 @@ const DraggableLinkList = () => {
     name: "socialLinks",
   });
 
-  const fetchData = async () => {
-    try {
-      const { data: userData } = await supabase.auth.getUser();
-      if (userData.user) {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("links")
-          .order("links->order", { ascending: true })
-          .eq("id", userData.user.id)
-          .returns<{ links: SocialLink[] }[]>();
-
-        if (error) throw error;
-
-        if (data) {
-          const links = data[0].links;
-          reset({ socialLinks: links });
-        }
-      }
-    } catch (error: any) {
-      console.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { setSocialLinks } = useSocialLinks();
 
   useEffect(() => {
-    fetchData();
+    (async () => {
+      try {
+        const { data: userData } = await supabase.auth.getUser();
+        if (userData.user) {
+          const { data, error } = await supabase
+            .from("profiles")
+            .select("links")
+            .order("links->order", { ascending: true })
+            .eq("id", userData.user.id)
+            .returns<{ links: SocialLink[] }[]>();
+
+          if (error) throw error;
+
+          if (data) {
+            const links = data[0].links;
+            reset({ socialLinks: links });
+          }
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
   useEffect(() => {
-    dispatch(setSocialLinks(fields));
-  }, [fields]);
+    const subscription = watch((value) => {
+      setSocialLinks(value.socialLinks as any);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const onSubmit: SubmitHandler<SocialLinkForm> = async (formData) => {
     try {
