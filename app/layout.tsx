@@ -1,5 +1,6 @@
 //Providers
 import { Toaster } from "react-hot-toast";
+import { Analytics } from "@vercel/analytics/react";
 import NextTopLoader from "nextjs-toploader";
 
 //assets
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className={`${instrumentSans.className}`}>
         <NextTopLoader color="#633CFF" showSpinner={false} />
         {children}
+        <Analytics />
         <Toaster
           position="bottom-center"
           containerClassName="toaster-container"
