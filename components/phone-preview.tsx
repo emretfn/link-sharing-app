@@ -73,7 +73,7 @@ const PhonePreview = ({ user }: PhonePreviewProps) => {
         </div>
         {/* Links */}
         <div className="flex flex-col gap-y-5">
-          {links.map((link) => (
+          {links?.map((link) => (
             <PreviewLink
               key={link.id}
               link={link}
